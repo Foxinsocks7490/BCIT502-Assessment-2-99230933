@@ -34,14 +34,40 @@ def load_sales(filename):
         for line in file_read_var:
             row_fields = line.strip().split(",")
             dict_build  = {
-                "sale_id": int(row_fields[0])
-                "date": row_fields[1]
-                "salesperson": row_fields[2]
-                "make": row_fields[3]
-                "model": row_fields[4]
-                "year": int(row_fields[5])
-                "price": float(row_fields[6])
+                "sale_id": int(row_fields[0]),
+                "date": row_fields[1],
+                "salesperson": row_fields[2],
+                "make": row_fields[3],
+                "model": row_fields[4],
+                "year": int(row_fields[5]),
+                "price": float(row_fields[6]),
                 }
             final_list.append(dict_build)
     return final_list
-        
+
+menu_selection = ("Please select from one of the following options:\n"
+                    "1) Total Sales\n"
+                    "2) Revenue\n"
+                    "3) Salesperson\n"
+                    "4) Most Popular Make\n"
+                    "5) Least Popular Make\n")
+user_input = input(menu_selection)
+if user_input.lower() == "1" or "total" or "sales" or "total sales":
+    # function for total sales
+    print("This is the placeholder for option 1")
+elif user_input.lower() == "2" or "revenue":
+    # function for revenue
+    print("This is the placeholder for option 2")
+elif user_input.lower() == "3" or "salesperson":
+    # function for salesperson
+    print("This is the placeholder for option 3")
+elif user_input.lower() == "4" or "most popular make":
+    # function for most popular make
+    print("This is the placeholder for option 4")
+elif user_input.lower() == "5" or "least popular make":
+    # function for least popular make
+    print("This is the placeholder for option 5")
+else:
+    print(user_input + " is not a valid option. " + menu_selection)
+    # add a return to the beginning of the menu, or repeat the menu again?
+    # maybe use a while loop to display the menu and then if/elif for option selection?
