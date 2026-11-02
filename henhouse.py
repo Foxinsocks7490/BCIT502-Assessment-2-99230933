@@ -25,3 +25,23 @@ Planning
 - Consider and implement testing methods
 - Complete documentation
 """
+
+final_list = []
+def load_sales(filename):
+    with open(filename) as fileread_var:
+        header_line = fileread_var.readline()
+        # split this up later so you can dynamically use the headers. Might be more trouble than it's worth
+        for line in file_read_var:
+            row_fields = line.strip().split(",")
+            dict_build  = {
+                "sale_id": int(row_fields[0])
+                "date": row_fields[1]
+                "salesperson": row_fields[2]
+                "make": row_fields[3]
+                "model": row_fields[4]
+                "year": int(row_fields[5])
+                "price": float(row_fields[6])
+                }
+            final_list.append(dict_build)
+    return final_list
+        
