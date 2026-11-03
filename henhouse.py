@@ -45,29 +45,47 @@ def load_sales(filename):
             final_list.append(dict_build)
     return final_list
 
-menu_selection = ("Please select from one of the following options:\n"
+
+whitespace_buffer = "			"
+menu_selection = (whitespace_buffer + "Welcome\n"
+    "Please enter a number from the following options:\n"
                     "1) Total Sales\n"
-                    "2) Revenue\n"
-                    "3) Salesperson\n"
-                    "4) Most Popular Make\n"
-                    "5) Least Popular Make\n")
-user_input = input(menu_selection)
-if user_input.lower() == "1" or "total" or "sales" or "total sales":
+                    "2) Total Revenue\n"
+                    "3) Sales by Salesperson\n"
+                    "4) Most Sold Make\n"
+                    "5) Least Sold Make\n"
+                    "6) Average Sale by Salesperson\n"
+                    "7) Top Salesperson by Average Sale\n"
+                    "8) Best Month by Revenue\n"
+                  )
+user_input = input(menu_selection).lower().strip()
+if user_input == "1" or user_input == "totalsales":
     # function for total sales
     print("This is the placeholder for option 1")
-elif user_input.lower() == "2" or "revenue":
-    # function for revenue
+elif user_input == "2" or user_input == "totalrevenue":
+    # function for total revenue
     print("This is the placeholder for option 2")
-elif user_input.lower() == "3" or "salesperson":
-    # function for salesperson
+elif user_input == "3" or user_input == "salesbyperson":
+    # function for sales by salesperson
     print("This is the placeholder for option 3")
-elif user_input.lower() == "4" or "most popular make":
-    # function for most popular make
+elif user_input == "4" or user_input == "mostsold":
+    # function for most sold make
     print("This is the placeholder for option 4")
-elif user_input.lower() == "5" or "least popular make":
-    # function for least popular make
+elif user_input == "5" or user_input == "leastsold":
+    # function for least sold make
     print("This is the placeholder for option 5")
+elif user_input == "6" or user_input == "averagesale":
+    # function for average sale by salesperson
+    print("This is the placeholder for option 6")
+elif user_input == "7" or user_input == "topperson":
+    # function for top salesperson by average sale
+    print("This is the placeholder for option 7")
+elif user_input == "8" or user_input == "bestmonth":
+    # function for best month by revnue
+    print("This is the placeholder for option 8")
 else:
-    print(user_input + " is not a valid option. " + menu_selection)
+    print(user_input + " is not a valid option. ")
     # add a return to the beginning of the menu, or repeat the menu again?
     # maybe use a while loop to display the menu and then if/elif for option selection?
+    # changed my mind, rewrite the whole thing. load valid inputs into a dictionary
+    # as keys with a value of the function we want.
