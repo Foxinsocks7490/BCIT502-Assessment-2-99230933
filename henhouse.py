@@ -31,7 +31,7 @@ def load_sales(filename):
     with open(filename) as fileread_var:
         header_line = fileread_var.readline()
         # split this up later so you can dynamically use the headers. Might be more trouble than it's worth
-        for line in file_read_var:
+        for line in fileread_var:
             row_fields = line.strip().split(",")
             dict_build  = {
                 "sale_id": int(row_fields[0]),
@@ -44,6 +44,7 @@ def load_sales(filename):
                 }
             final_list.append(dict_build)
     return final_list
+load_sales("car_sales.csv")
 
 
 whitespace_buffer = "			"
@@ -60,11 +61,16 @@ menu_selection = (whitespace_buffer + "Welcome\n"
                   )
 user_input = input(menu_selection).lower().strip()
 if user_input == "1" or user_input == "totalsales":
-    # function for total sales
-    print("This is the placeholder for option 1")
+    def total_sales(sale_id):
+        return len(sale_id)
+    print(f"Total Sales: {total_sales(final_list)}")
+
 elif user_input == "2" or user_input == "totalrevenue":
-    # function for total revenue
-    print("This is the placeholder for option 2")
+    total = 0
+    for sale_price in final_list:
+        total = total + sale_price["price"]
+    print(f"Total Revenue: ${total:,.2f}")
+        
 elif user_input == "3" or user_input == "salesbyperson":
     # function for sales by salesperson
     print("This is the placeholder for option 3")
