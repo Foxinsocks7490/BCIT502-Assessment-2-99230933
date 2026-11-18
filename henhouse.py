@@ -54,6 +54,59 @@ RETURNS: List of dictionaries
     return final_list
 load_sales("car_sales.csv")
 
+def total_sales(sale_id):
+    print(f"Total Sales: {len(sale_id)}")
+
+def total_revenue(sale_data):
+    total = 0.00
+    for sale_price in sale_data:
+        total = total + sale_price["price"]
+    print(f"Total Revenue: ${total:,.2f}")
+
+def salesperson_count(count_data):
+    count_dict = {}
+    for sale_dict in count_data:
+        current_count = sale_dict["salesperson"]
+        if current_count in count_dict:
+            count_dict[current_count] = count_dict[current_count] + 1
+        else:
+            count_dict[current_count] = 1
+    print(count_dict)
+
+def most_sold_make(make_data):
+    make_counts = {}
+    for sale_dict in make_data:
+        current_make = sale_dict["make"]
+        if current_make in make_counts:
+            make_counts[current_make] = make_counts[current_make] + 1
+        else:
+            make_counts[current_make] = 1
+    best_make = None
+    best_count = 0
+    for current_make in make_counts:
+        current_count = make_counts[current_make]
+        if current_count > best_count:
+            best_count = current_count
+            best_make = current_make
+    print(f"Make: {best_make}   Sales: {best_count}")
+
+def least_sold_model(model_data):
+    model_counts = {}
+    for sale_dict in model_data:
+        current_model = sale_dict["model"]
+        if current_model in model_counts:
+            model_counts[current_model] = model_counts[current_model] + 1
+        else:
+            model_counts[current_model] = 1
+    least_model = None
+    least_count = float("inf")
+    for current_model in model_counts:
+        current_count = model_counts[current_model]
+        if current_count < least_count:
+            least_count = current_count
+            least_model = current_model
+    print(f"Model: {least_model}   Sales: {least_count}")
+
 whitespace_buffer = "			"
 menu_selection = (whitespace_buffer + "Welcome\n"
     "Please enter a number from the following options:\n"
@@ -69,65 +122,44 @@ menu_selection = (whitespace_buffer + "Welcome\n"
                     "0) Exit\n"
                     ">"
                   )
-user_input = input(menu_selection).lower().strip()
-if user_input == "1" or user_input == "totalsales":
-    def total_sales(sale_id):
-        return len(sale_id)
-    print(f"Total Sales: {total_sales(final_list)}")
 
-elif user_input == "2" or user_input == "totalrevenue":
-    total = 0.00
-    for sale_price in final_list:
-        total = total + sale_price["price"]
-    print(f"Total Revenue: ${total:,.2f}")
-        
-elif user_input == "3" or user_input == "salesbyperson":
-# function for salesperson
-    print("This is the placeholder for option 3")
-        
+while True:
+    user_input = input(menu_selection).lower().strip()
+    
+    if user_input == "1" or user_input == "totalsales":
+        total_sales(final_list)
 
-elif user_input == "4" or user_input == "mostsold":
-    def most_popular_make(make_data):
-        make_counts = {}
-        for sale_dict in make_data:
-            current_make = sale_dict["make"]
-            if current_make in make_counts:
-                make_counts[current_make] = make_counts[current_make] + 1
-            else:
-                make_counts[current_make] = 1
-        best_make = None
-        best_count = 0
-        for current_make in make_counts:
-            current_count = make_counts[current_make]
-            if current_count > best_count:
-                best_count = current_count
-                best_make = current_make              
-        return best_make, best_count
-    print(most_popular_make(final_list))
+    elif user_input == "2" or user_input == "totalrevenue":
+        total_revenue(final_list)
+    
+    elif user_input == "3" or user_input == "salesbyperson":
+        salesperson_count(final_list)
 
-elif user_input == "5" or user_input == "leastsold":
-    def least_popular_model(model_data):
-        model_counts = {}
-        for sale_dict in model_data:
-            current_model = sale_dict["model"]
-            if current_model in model_counts:
-                model_counts[current_model] = model_counts[current_model] + 1
-            else:
-                model_counts[current_model] = 1
-        least_model = None
-        least_count = float("inf")
-        for current_model in model_counts:
-            current_count = model_counts[current_model]
-            if current_count < least_count:
-                least_count = current_count
-                least_model = current_model
-        return least_model, least_count
-    print(least_popular_model(final_list))
-        
+    elif user_input == "4" or user_input == "mostsold":
+        most_sold_make(final_list)
 
+    elif user_input == "5" or user_input == "leastsold":
+        least_sold_model(final_list)
+    
+    elif user_input == "0" or user_input == "exit":
+        break
+
+    else:
+        print(user_input + " is not a valid option. ")
+
+"""
 elif user_input == "6" or user_input == "averagesale":
-    # function for average sale by salesperson
-    print("This is the placeholder for option 6")
+    def average_salesperson(average_data):
+        averaged_sum = {}
+        for sale_dict in average_data:
+            current_average = sale_dict["price"]
+            if current_average in averaged_sum:
+                averaged_sum[current_average] = averaged_sum[current_average] + current_average
+            else:
+                averaged_sum[current_average] = current_average
+        return averaged_sum
+    print(average_salesperson(final_list))
+    
 elif user_input == "7" or user_input == "topperson":
     # function for top salesperson by average sale
     print("This is the placeholder for option 7")
@@ -137,11 +169,4 @@ elif user_input == "8" or user_input == "salemonth":
 elif user_input == "9" or user_input == "bestmonth":
     # function for best month by sales
     print("This is the placerholder for option 9")
-elif user_input == "0" or user_input == "exit":
-    print("This is a placeholder for exiting the program")    
-else:
-    print(user_input + " is not a valid option. ")
-    # add a return to the beginning of the menu, or repeat the menu again?
-    # maybe use a while loop to display the menu and then if/elif for option selection?
-    # changed my mind, rewrite the whole thing. load valid inputs into a dictionary
-    # as keys with a value of the function we want.
+"""
