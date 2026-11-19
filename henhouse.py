@@ -55,13 +55,13 @@ RETURNS: List of dictionaries
 load_sales("car_sales.csv")
 
 def total_sales(sale_id):
-    print(f"Total Sales: {len(sale_id)}")
+    return len(sale_id)
 
 def total_revenue(sale_data):
     total = 0.00
     for sale_price in sale_data:
         total = total + sale_price["price"]
-    print(f"Total Revenue: ${total:,.2f}")
+    return total
 
 def salesperson_count(count_data):
     count_dict = {}
@@ -71,7 +71,7 @@ def salesperson_count(count_data):
             count_dict[current_count] = count_dict[current_count] + 1
         else:
             count_dict[current_count] = 1
-    print(count_dict)
+    return count_dict
 
 def most_sold_make(make_data):
     make_counts = {}
@@ -88,7 +88,7 @@ def most_sold_make(make_data):
         if current_count > best_count:
             best_count = current_count
             best_make = current_make
-    print(f"Make: {best_make}   Sales: {best_count}")
+    return str(f"Make: {best_make}    Sales: {best_count}")
 
 def least_sold_model(model_data):
     model_counts = {}
@@ -105,7 +105,16 @@ def least_sold_model(model_data):
         if current_count < least_count:
             least_count = current_count
             least_model = current_model
-    print(f"Model: {least_model}   Sales: {least_count}")
+    return str(f"Model: {least_model}    Sales: {least_count}")
+
+def output_report(final_list):
+    with open("Car_Sales_Report.txt", "w") as text_report:
+        print(f"Total Sales: {total_sales(final_list)}", file=text_report)
+        print(f"Total Revenue: {total_revenue(final_list)}", file=text_report)
+        print(f"Sales by Salesperson: {salesperson_count(final_list)}", file=text_report)
+        print(f"Most Sold Make: {most_sold_make(final_list)}", file=text_report)
+        print(f"Least Sold Model: {least_sold_model(final_list)}", file=text_report)
+        
 
 whitespace_buffer = "			"
 menu_selection = (whitespace_buffer + "Welcome\n"
@@ -119,6 +128,7 @@ menu_selection = (whitespace_buffer + "Welcome\n"
                     "7) Top Salesperson by Average Sale\n"
                     "8) Sales by Month\n"
                     "9) Best Month by Revenue\n"
+                    "10) Write All to Report File\n"
                     "0) Exit\n"
                     ">"
                   )
@@ -127,46 +137,26 @@ while True:
     user_input = input(menu_selection).lower().strip()
     
     if user_input == "1" or user_input == "totalsales":
-        total_sales(final_list)
+        print(f"Total Sales: {total_sales(final_list)}\n")
 
     elif user_input == "2" or user_input == "totalrevenue":
-        total_revenue(final_list)
+        print(f"Total Revenue: ${total_revenue(final_list):,.2f}\n")
     
     elif user_input == "3" or user_input == "salesbyperson":
-        salesperson_count(final_list)
+        print(f"{salesperson_count(final_list)}\n")
 
     elif user_input == "4" or user_input == "mostsold":
-        most_sold_make(final_list)
+        print(f"{most_sold_make(final_list)}\n")
 
     elif user_input == "5" or user_input == "leastsold":
-        least_sold_model(final_list)
+        print(f"{least_sold_model(final_list)}\n")
     
+    elif user_input == "10" or user_input == "writereport":
+        print(f"{output_report(final_list)}\n")
+
     elif user_input == "0" or user_input == "exit":
         break
 
     else:
-        print(user_input + " is not a valid option. ")
+        print("'" + user_input + "'" + " is not a valid option.\n")
 
-"""
-elif user_input == "6" or user_input == "averagesale":
-    def average_salesperson(average_data):
-        averaged_sum = {}
-        for sale_dict in average_data:
-            current_average = sale_dict["price"]
-            if current_average in averaged_sum:
-                averaged_sum[current_average] = averaged_sum[current_average] + current_average
-            else:
-                averaged_sum[current_average] = current_average
-        return averaged_sum
-    print(average_salesperson(final_list))
-    
-elif user_input == "7" or user_input == "topperson":
-    # function for top salesperson by average sale
-    print("This is the placeholder for option 7")
-elif user_input == "8" or user_input == "salemonth":
-    # function for sales by month
-    print("This is the placeholder for option 8")
-elif user_input == "9" or user_input == "bestmonth":
-    # function for best month by sales
-    print("This is the placerholder for option 9")
-"""
