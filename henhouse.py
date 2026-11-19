@@ -4,10 +4,9 @@ cim0061@arastudent.ac.nz
 
 Car Sales Analysis Tool
 
-A python program that will parse a CSV file into a dictionary,
-provide the user with analytic tools which will answer simple
-questions from a text menu, and write those answers to a human readable
-report file.
+A python program that will parse a CSV file into a list of dictionaries, each
+containg data for one sale. A text menu will allow a user to select analytical functions
+or output functions to a report text file.
 """
 
 """
@@ -15,7 +14,7 @@ Goals
 - load CSV (DONE)
 - parse each row into a dictionary (DONE)
 - answer some simple questions with analytics (WIP)
-- write answers to a short report file
+- write answers to a short report file (DONE)
 - write documentation
 """
 
@@ -26,7 +25,7 @@ Planning
 - Consider and implement testing methods
 """
 
-final_list = []
+
 def load_sales(filename):
     """
 Opens CSV file and reads first line into a header variable,
@@ -34,12 +33,12 @@ then the rest of the data line by line into a list dictionaries.
 
 ARGS:
 
-RETURNS: List of dictionaries
+RETURNS: List of sale dictionaries
 """
-    with open(filename) as fileread_var:
-        header_line = fileread_var.readline()
-        # split this up later so you can dynamically use the headers. Might be more trouble than it's worth
-        for line in fileread_var:
+    sales_list = []
+    with open(filename) as fileread:
+        header_line = fileread.readline()
+        for line in fileread:
             row_fields = line.strip().split(",")
             dict_build  = {
                 "sale_id": int(row_fields[0]),
@@ -50,18 +49,21 @@ RETURNS: List of dictionaries
                 "year": int(row_fields[5]),
                 "price": float(row_fields[6]),
                 }
-            final_list.append(dict_build)
-    return final_list
-load_sales("car_sales.csv")
+            sales_list.append(dict_build)
+    return sales_list
+final_list = load_sales("car_sales.csv")
+
 
 def total_sales(sale_id):
     return len(sale_id)
+
 
 def total_revenue(sale_data):
     total = 0.00
     for sale_price in sale_data:
         total = total + sale_price["price"]
     return total
+
 
 def salesperson_count(count_data):
     count_dict = {}
@@ -73,6 +75,7 @@ def salesperson_count(count_data):
             count_dict[current_count] = 1
     return count_dict
 
+
 def most_sold_make(make_data):
     make_counts = {}
     for sale_dict in make_data:
@@ -81,6 +84,7 @@ def most_sold_make(make_data):
             make_counts[current_make] = make_counts[current_make] + 1
         else:
             make_counts[current_make] = 1
+
     best_make = None
     best_count = 0
     for current_make in make_counts:
@@ -88,32 +92,37 @@ def most_sold_make(make_data):
         if current_count > best_count:
             best_count = current_count
             best_make = current_make
-    return str(f"Make: {best_make}    Sales: {best_count}")
+    return (f"Make: {best_make}    Sales: {best_count}")
+
 
 def least_sold_model(model_data):
     model_counts = {}
     for sale_dict in model_data:
-        current_model = sale_dict["model"]
-        if current_model in model_counts:
-            model_counts[current_model] = model_counts[current_model] + 1
+        current_keys = sale_dict["make"], sale_dict["model"]
+        if current_keys in model_counts:
+            model_counts[current_keys] = model_counts[current_keys] + 1
         else:
-            model_counts[current_model] = 1
+            model_counts[current_keys] = 1
+
     least_model = None
     least_count = float("inf")
-    for current_model in model_counts:
-        current_count = model_counts[current_model]
+    for current_keys in model_counts:
+        current_count = model_counts[current_keys]
         if current_count < least_count:
+            least_model = current_keys
             least_count = current_count
-            least_model = current_model
-    return str(f"Model: {least_model}    Sales: {least_count}")
 
-def output_report(final_list):
+    make, model = least_model
+    return (f"Make: {make}    Model: {model}    Sales: {least_count}")
+
+
+def output_report(function_data):
     with open("Car_Sales_Report.txt", "w") as text_report:
-        print(f"Total Sales: {total_sales(final_list)}", file=text_report)
-        print(f"Total Revenue: {total_revenue(final_list)}", file=text_report)
-        print(f"Sales by Salesperson: {salesperson_count(final_list)}", file=text_report)
-        print(f"Most Sold Make: {most_sold_make(final_list)}", file=text_report)
-        print(f"Least Sold Model: {least_sold_model(final_list)}", file=text_report)
+        print(f"Total Sales - {total_sales(function_data)}\n", file=text_report)
+        print(f"Total Revenue - ${total_revenue(function_data):,.2f}\n", file=text_report)
+        print(f"Sales by Salesperson - {salesperson_count(function_data)}\n", file=text_report)
+        print(f"Most Sold Make - {most_sold_make(function_data)}\n", file=text_report)
+        print(f"Least Sold Model - {least_sold_model(function_data)}\n", file=text_report)
         
 
 whitespace_buffer = "			"
@@ -152,11 +161,11 @@ while True:
         print(f"{least_sold_model(final_list)}\n")
     
     elif user_input == "10" or user_input == "writereport":
-        print(f"{output_report(final_list)}\n")
+        output_report(final_list)
+        print(f"Report has been created.\n")
 
     elif user_input == "0" or user_input == "exit":
         break
 
     else:
         print("'" + user_input + "'" + " is not a valid option.\n")
-
