@@ -158,32 +158,32 @@ menu_selection = (whitespace_buffer + "Welcome\n"
                     "0) Exit\n"
                     ">"
                   )
+if __name__ == "__main__":
+    while True:
 
-while True:
-
-    user_input = input(menu_selection).lower().strip()
+        user_input = input(menu_selection).lower().strip()
     
-    if user_input == "1" or user_input == "totalsales":
-        print(f"Total Sales: {total_sales(final_list)}\n")
+        if user_input == "1" or user_input == "totalsales":
+            print(f"Total Sales: {total_sales(final_list)}\n")
 
-    elif user_input == "2" or user_input == "totalrevenue":
-        print(f"Total Revenue: ${total_revenue(final_list):,.2f}\n")
+        elif user_input == "2" or user_input == "totalrevenue":
+            print(f"Total Revenue: ${total_revenue(final_list):,.2f}\n")
     
-    elif user_input == "3" or user_input == "salesbyperson":
-        print(f"{salesperson_count(final_list)}\n")
+        elif user_input == "3" or user_input == "salesbyperson":
+            print(f"{salesperson_count(final_list)}\n")
 
-    elif user_input == "4" or user_input == "mostsold":
-        print(f"{most_sold_make(final_list)}\n")
+        elif user_input == "4" or user_input == "mostsold":
+            print(f"{most_sold_make(final_list)}\n")
 
-    elif user_input == "5" or user_input == "leastsold":
-        print(f"{least_sold_model(final_list)}\n")
+        elif user_input == "5" or user_input == "leastsold":
+            print(f"{least_sold_model(final_list)}\n")
     
-    elif user_input == "6" or user_input == "writereport":
-        output_report(final_list)
-        print(f"Report has been created.\n")
+        elif user_input == "6" or user_input == "writereport":
+            output_report(final_list)
+            print(f"Report has been created.\n")
 
-    elif user_input == "0" or user_input == "exit":
-        break
+        elif user_input == "0" or user_input == "exit":
+            break
 
-    else:
-        print("'" + user_input + "'" + " is not a valid option.\n")
+        else:
+            print("'" + user_input + "'" + " is not a valid option.\n")
