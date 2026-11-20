@@ -28,13 +28,13 @@ Planning
 
 def load_sales(filename):
     """
-Opens CSV file and reads first line into a header variable,
-then the rest of the data line by line into a list dictionaries.
+    Opens CSV file and reads first line into a disposed header variable,
+    then the rest of the data line by line into a list dictionaries.
 
-ARGS:
-
-RETURNS: List of sale dictionaries
-"""
+    ARGS:    filename (str): CSV load path with file extension.
+    RETURNS: sales_list (list of dictionaries): one dictionary per sale entry,
+             keys are the header names, with sale_id/year as integers, price as float.
+    """
     sales_list = []
     with open(filename) as fileread:
         header_line = fileread.readline()
@@ -54,11 +54,24 @@ RETURNS: List of sale dictionaries
 final_list = load_sales("car_sales.csv")
 
 
-def total_sales(sale_id):
-    return len(sale_id)
+def total_sales(sale_data):
+    """
+    Counts the number of sales entries.
+
+    ARGS:    sale_data (list of dictionaries): sales entries to be counted.
+    RETURNS: (int): number of sale entries in the list.         
+    """
+    return len(sale_data)
 
 
 def total_revenue(sale_data):
+    """
+    Sums the price from sales entries.
+
+    ARGS:    sale_data (list of dictionaries): sales entries to be summed.
+    RETURNS: (float): Sum of all prices in sales entries.
+         
+    """
     total = 0.00
     for sale_price in sale_data:
         total = total + sale_price["price"]
@@ -66,6 +79,14 @@ def total_revenue(sale_data):
 
 
 def salesperson_count(count_data):
+    """
+    Counts the sales entries made by each salesperson and returns a dictionary of counts
+    in format {name (str):count (int)}.
+
+    ARGS:    count_data (list of dictionaries): sales entries to be counted.
+    RETURNS: (dictionary): Salesperson names as keys paired to counts as values.
+         
+    """
     count_dict = {}
     for sale_dict in count_data:
         current_count = sale_dict["salesperson"]
@@ -77,6 +98,13 @@ def salesperson_count(count_data):
 
 
 def most_sold_make(make_data):
+    """
+    Finds the most sold make by sales, returns it as a formatted string with a count.
+
+    ARGS:    make_data (list of dictionaries) sales entries to be counted.
+    RETURNS: (str): formatted string containing name and count of most sold make.
+         
+    """
     make_counts = {}
     for sale_dict in make_data:
         current_make = sale_dict["make"]
@@ -96,6 +124,13 @@ def most_sold_make(make_data):
 
 
 def least_sold_model(model_data):
+    """
+    Finds the least sold model by sales, returns it as a formatted string with a count.
+
+    ARGS:    model_data (list of dictionaries): sales data to be counted.
+    RETURNS: (str): formatted string containing name and count of least sold model.
+         
+    """
     model_counts = {}
     for sale_dict in model_data:
         current_keys = sale_dict["make"], sale_dict["model"]
@@ -117,6 +152,13 @@ def least_sold_model(model_data):
 
 
 def output_report(function_data):
+    """
+    Outputs all available analytical functions to an external text file.
+
+    ARGS:    fucntion_data (list of dictionaries): sales data to be processed by fucntions.
+    RETURNS: None
+         
+    """
     with open("Car_Sales_Report.txt", "w") as text_report:
         print(f"Total Sales - {total_sales(function_data)}\n", file=text_report)
         print(f"Total Revenue - ${total_revenue(function_data):,.2f}\n", file=text_report)
@@ -133,16 +175,13 @@ menu_selection = (whitespace_buffer + "Welcome\n"
                     "3) Sales by Salesperson\n"
                     "4) Most Sold Make\n"
                     "5) Least Sold Model\n"
-                    "6) Average Sale by Salesperson\n"
-                    "7) Top Salesperson by Average Sale\n"
-                    "8) Sales by Month\n"
-                    "9) Best Month by Revenue\n"
-                    "10) Write All to Report File\n"
+                    "6) Write All to Report File\n"
                     "0) Exit\n"
                     ">"
                   )
 
 while True:
+
     user_input = input(menu_selection).lower().strip()
     
     if user_input == "1" or user_input == "totalsales":
@@ -160,7 +199,7 @@ while True:
     elif user_input == "5" or user_input == "leastsold":
         print(f"{least_sold_model(final_list)}\n")
     
-    elif user_input == "10" or user_input == "writereport":
+    elif user_input == "6" or user_input == "writereport":
         output_report(final_list)
         print(f"Report has been created.\n")
 
