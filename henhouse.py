@@ -9,22 +9,6 @@ containg data for one sale. A text menu will allow a user to select analytical f
 or output functions to a report text file.
 """
 
-"""
-Goals
-- load CSV (DONE)
-- parse each row into a dictionary (DONE)
-- answer some simple questions with analytics (WIP)
-- write answers to a short report file (DONE)
-- write documentation
-"""
-
-"""
-Planning
-- Map out main steps (parsing (DONE), analytical functions (DONE), text inteface (DONE), report out)
-- Plan what steps needs what input, and what it is outputting (DONE)
-- Consider and implement testing methods
-"""
-
 
 def load_sales(filename):
     """
