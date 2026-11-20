@@ -53,8 +53,7 @@ def total_revenue(sale_data):
     Sums the price from sales entries.
 
     ARGS:    sale_data (list of dictionaries): sales entries to be summed.
-    RETURNS: (float): Sum of all prices in sales entries.
-         
+    RETURNS: (float): Sum of all prices in sales entries.         
     """
     total = 0.00
     for sale_price in sale_data:
@@ -69,7 +68,6 @@ def salesperson_count(count_data):
 
     ARGS:    count_data (list of dictionaries): sales entries to be counted.
     RETURNS: (dictionary): Salesperson names as keys paired to counts as values.
-         
     """
     count_dict = {}
     for sale_dict in count_data:
@@ -87,7 +85,6 @@ def most_sold_make(make_data):
 
     ARGS:    make_data (list of dictionaries) sales entries to be counted.
     RETURNS: (str): formatted string containing name and count of most sold make.
-         
     """
     make_counts = {}
     for sale_dict in make_data:
@@ -113,7 +110,6 @@ def least_sold_model(model_data):
 
     ARGS:    model_data (list of dictionaries): sales data to be counted.
     RETURNS: (str): formatted string containing name and count of least sold model.
-         
     """
     model_counts = {}
     for sale_dict in model_data:
@@ -141,7 +137,6 @@ def output_report(function_data):
 
     ARGS:    fucntion_data (list of dictionaries): sales data to be processed by fucntions.
     RETURNS: None
-         
     """
     with open("Car_Sales_Report.txt", "w") as text_report:
         print(f"Total Sales - {total_sales(function_data)}\n", file=text_report)
