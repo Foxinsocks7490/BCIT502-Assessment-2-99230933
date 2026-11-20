@@ -5,7 +5,7 @@ cim0061@arastudent.ac.nz
 Car Sales Analysis Tool
 
 A python program that will parse a CSV file into a list of dictionaries, each
-containg data for one sale. A text menu will allow a user to select analytical functions
+containing data for one sale. A text menu will allow a user to select analytical functions
 or output functions to a report text file.
 """
 
@@ -161,28 +161,29 @@ menu_selection = (whitespace_buffer + "Welcome\n"
 if __name__ == "__main__":
     while True:
 
-        user_input = input(menu_selection).lower().strip()
+        user_input = input(menu_selection)
+        transformed_input = user_input.lower().strip().replace(" ", "")
     
-        if user_input == "1" or user_input == "totalsales":
+        if transformed_input == "1" or transformed_input == "totalsales":
             print(f"Total Sales: {total_sales(final_list)}\n")
 
-        elif user_input == "2" or user_input == "totalrevenue":
+        elif transformed_input == "2" or transformed_input == "totalrevenue":
             print(f"Total Revenue: ${total_revenue(final_list):,.2f}\n")
     
-        elif user_input == "3" or user_input == "salesbyperson":
+        elif transformed_input == "3" or transformed_input == "salesbyperson":
             print(f"{salesperson_count(final_list)}\n")
 
-        elif user_input == "4" or user_input == "mostsold":
+        elif transformed_input == "4" or transformed_input == "mostsold":
             print(f"{most_sold_make(final_list)}\n")
 
-        elif user_input == "5" or user_input == "leastsold":
+        elif transformed_input == "5" or transformed_input == "leastsold":
             print(f"{least_sold_model(final_list)}\n")
     
-        elif user_input == "6" or user_input == "writereport":
+        elif transformed_input == "6" or transformed_input == "writereport":
             output_report(final_list)
             print(f"Report has been created.\n")
 
-        elif user_input == "0" or user_input == "exit":
+        elif transformed_input == "0" or transformed_input == "exit":
             break
 
         else:
